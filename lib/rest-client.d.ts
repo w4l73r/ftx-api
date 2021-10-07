@@ -22,6 +22,7 @@ export declare class RestClient {
      * https://docs.ftx.com/#subaccounts
      *
     **/
+    setHttpOption(key: any, value: any): AxiosRequestConfig;
     getSubaccounts(): GenericAPIResponse;
     createSubaccount(nickname: string): GenericAPIResponse;
     changeSubaccountName(params: {

@@ -9,6 +9,7 @@ export default class RequestUtil {
     private key;
     private secret;
     constructor(key: string | undefined, secret: string | undefined, baseUrl: string, options?: RestClientOptions, requestOptions?: AxiosRequestConfig);
+    setRequestOptions(optionKey: string, optionValue: any): AxiosRequestConfig;
     get(endpoint: string, params?: any): GenericAPIResponse;
     post(endpoint: string, params?: any): GenericAPIResponse;
     delete(endpoint: string, params?: any): GenericAPIResponse;

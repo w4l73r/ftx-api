@@ -65,7 +65,7 @@ export default class RequestUtil {
 
     this.globalRequestOptions = {
       // in ms == 5 minutes by default
-      timeout: 1000 * 60 * 5,
+      timeout: this.options.recv_window,
       headers: { },
       // custom request options based on axios specs - see: https://github.com/axios/axios#request-config
       ...requestOptions,
@@ -92,6 +92,11 @@ export default class RequestUtil {
 
     this.key = key;
     this.secret = secret;
+  }
+
+  setRequestOptions(optionKey: string, optionValue: any): AxiosRequestConfig {
+    this.globalRequestOptions[optionKey]=optionValue;
+    return this.globalRequestOptions;
   }
 
   get(endpoint: string, params?: any): GenericAPIResponse {

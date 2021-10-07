@@ -41,6 +41,11 @@ export class RestClient {
    *
   **/
 
+   setHttpOption(key,value) {
+    return this.requestWrapper.setRequestOptions(key,value);
+  }
+
+
   getSubaccounts(): GenericAPIResponse {
     return this.requestWrapper.get('subaccounts');
   }
