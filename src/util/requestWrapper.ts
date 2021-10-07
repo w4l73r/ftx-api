@@ -1,5 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
+
+const http = require('http');
+const https = require('https');
+
+import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { signMessage } from './node-support';
 import { serializeParams, RestClientOptions, GenericAPIResponse, FtxDomain, serializeParamPayload, programId, programKey } from './requestUtils';
 
@@ -143,7 +147,12 @@ export default class RequestUtil {
       options.data = params;
     }
 
-    return axios(options).then(response => {
+    /* localAddress support */
+    const httpAgent = new http.Agent(options)
+    const httpsAgent = new https.Agent(options)    
+
+
+    return axios( { httpAgent, httpsAgent }).then(response => {
       if (response.status == 200) {
         return response.data;
       }
