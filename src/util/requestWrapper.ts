@@ -1,9 +1,6 @@
-
-
-const http = require('http');
-const https = require('https');
-
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import https  from 'https';
+import http from 'http';
 import { signMessage } from './node-support';
 import { serializeParams, RestClientOptions, GenericAPIResponse, FtxDomain, serializeParamPayload, programId, programKey } from './requestUtils';
 
@@ -69,7 +66,7 @@ export default class RequestUtil {
 
     this.globalRequestOptions = {
       // in ms == 5 minutes by default
-      timeout: this.options.recv_window,
+      timeout: 1000 * 60 * 5,
       headers: { },
       // custom request options based on axios specs - see: https://github.com/axios/axios#request-config
       ...requestOptions,
@@ -147,16 +144,13 @@ export default class RequestUtil {
       options.data = params;
     }
 
-    /* localAddress support */
-    const httpAgent = new http.Agent(options)
-    const httpsAgent = new https.Agent(options)    
-
-
-    return axios( { httpAgent, httpsAgent }).then(response => {
+    options.httpsAgent = new https.Agent(options)
+    options.httpAgent = new http.Agent(options)
+  
+    return axios(options).then(response => {
       if (response.status == 200) {
         return response.data;
       }
-
       throw response;
     }).catch(e => this.parseException(e));
   }

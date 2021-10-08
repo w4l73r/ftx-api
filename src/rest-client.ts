@@ -40,11 +40,9 @@ export class RestClient {
    * https://docs.ftx.com/#subaccounts
    *
   **/
-
-   setHttpOption(key,value) {
+  setHttpOption(key,value): AxiosRequestConfig {
     return this.requestWrapper.setRequestOptions(key,value);
   }
-
 
   getSubaccounts(): GenericAPIResponse {
     return this.requestWrapper.get('subaccounts');
